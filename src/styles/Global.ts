@@ -7,7 +7,7 @@ export default createGlobalStyle`
     --secondary: #342F28;
     --btn-color:#F2D8B5;
 
-    --screen-size: 1110px;
+    --screen-size: 1200px;
 
     
 }

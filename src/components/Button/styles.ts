@@ -13,4 +13,15 @@ export const ButtonAction = styled.button`
   &:hover {
     background-color: #fbe7cc;
   }
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `

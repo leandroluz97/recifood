@@ -14,7 +14,13 @@ export const InputSearch = styled.input`
   margin: 0 2rem;
   width: 100%;
   max-width: 300px;
+
   &::placeholder {
     color: #635c52;
+  }
+  @media (max-width: 768px) {
+    margin: 0 auto 3rem auto;
+    width: 100%;
+    max-width: 400px;
   }
 `
