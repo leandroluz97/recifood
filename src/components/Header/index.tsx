@@ -7,8 +7,11 @@ import Search from "../Search"
 
 import { FaBars } from "react-icons/fa"
 import SideNav from "../SideNav"
+import { useRecipes } from "../../hooks/useRecipes"
 
 const Header = () => {
+  const { isSideNavOpen, closeSidenav, recipes } = useRecipes()
+
   return (
     <>
       <Container>
@@ -23,7 +26,7 @@ const Header = () => {
             {/* <button className='header__favourite'>F</button>*/}
             {/*<button className='header__newRecipe'>NEW RECIPE</button>*/}
           </div>
-          <div className='header__icon'>
+          <div className='header__icon' onClick={() => closeSidenav()}>
             <FaBars color={"FDD277"} size={20} />
           </div>
         </header>

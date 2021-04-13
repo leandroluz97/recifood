@@ -6,7 +6,7 @@ export default createGlobalStyle`
     --primary: #26211B;
     --secondary: #342F28;
     --btn-color:#F2D8B5;
-
+    --card-color:#F0F0F5;
     --screen-size: 1200px;
 
     
@@ -24,6 +24,7 @@ export default createGlobalStyle`
  body{
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
+    overflow-x:hidden;
  }
 
  button{
