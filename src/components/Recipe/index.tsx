@@ -7,7 +7,7 @@ import { useRecipes } from "../../hooks/useRecipes"
 //AiFillStar
 interface Recipe {
   id: string
-  available: number
+  favourite: boolean
   name: string
   description: string
   price: number
@@ -20,7 +20,7 @@ const RecipeCard = ({
   image,
   price,
   id,
-  available,
+  favourite,
 }: Recipe) => {
   const { deleteRecipe } = useRecipes()
 

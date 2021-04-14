@@ -15,7 +15,7 @@ interface RecipesProviderProps {
 }
 interface Recipe {
   id: string
-  available: number
+  favourite: boolean
   name: string
   description: string
   price: number
@@ -30,6 +30,10 @@ interface RecipeContextData {
   closeSidenav: () => void
   recipes: Recipe[]
   deleteRecipe: (id: string) => Promise<void>
+  search: string
+  setSearch: (value: string) => void
+  favourites: boolean
+  setFavourites: (fav: boolean) => void
 }
 
 interface foodState {
@@ -47,6 +51,8 @@ export const RecipesProvider = ({
   //ESTATES
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
   const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [search, setSearch] = useState("")
+  const [favourites, setFavourites] = useState(false)
 
   useEffect(() => {
     try {
@@ -91,9 +97,20 @@ export const RecipesProvider = ({
     }
   }
 
+  function searchRecipe(searchName: string) {}
+
   return (
     <RecipesContext.Provider
-      value={{ isSideNavOpen, closeSidenav, recipes, deleteRecipe }}
+      value={{
+        isSideNavOpen,
+        closeSidenav,
+        recipes,
+        deleteRecipe,
+        search,
+        setSearch,
+        favourites,
+        setFavourites,
+      }}
     >
       {children}
     </RecipesContext.Provider>

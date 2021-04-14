@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useRecipes } from "../../hooks/useRecipes"
-import { api } from "../../service/api"
+//import { api } from "../../service/api"
 import RecipeCard from "../../components/Recipe"
 import { Container } from "./styles"
 import Spinner from "../../components/Spinner"
@@ -100,7 +100,7 @@ const data = {
 }
 */
 const Dashboard = () => {
-  const { recipes } = useRecipes()
+  const { recipes, search, favourites } = useRecipes()
   /*
   useEffect(() => {
     api
@@ -116,12 +116,22 @@ const Dashboard = () => {
   }, [])
 */
 
+  const searched = favourites
+    ? recipes.filter(
+        (recipe) =>
+          recipe.name.toLowerCase().includes(search) &&
+          recipe.favourite === true
+      )
+    : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
+
+  console.log("search: " + search)
+
   return (
     <Container>
-      {recipes.length == 0 ? (
+      {searched.length === 0 ? (
         <Spinner />
       ) : (
-        recipes.map((recipe) => (
+        searched.map((recipe) => (
           <RecipeCard
             key={recipe.id}
             name={recipe.name}
@@ -129,7 +139,7 @@ const Dashboard = () => {
             image={recipe.image}
             description={recipe.description}
             id={recipe.id}
-            available={recipe.available}
+            favourite={recipe.favourite}
           />
         ))
       )}
