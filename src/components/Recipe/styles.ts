@@ -1,9 +1,12 @@
 import styled from "styled-components"
 
 export const Card = styled.a`
-  background-color: var(--card-color);
+  background-color: #fef0de;
   border-radius: 13px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition: all 0.2s ease;
 
   &:hover {
@@ -17,14 +20,14 @@ export const Card = styled.a`
   }
 
   .card__title {
-    color: #3d3d4d;
+    color: #443b30;
     font-size: 2.5rem;
     padding: 1rem 2.5rem 0 2.5rem;
     margin-bottom: 1.5rem;
   }
 
   .card__description {
-    color: #7c7c92;
+    color: #6b6b6b;
     font-size: 1.6rem;
     padding: 1rem 2.5rem 0 2.5rem;
     height: 6rem;
@@ -33,7 +36,7 @@ export const Card = styled.a`
   }
 
   .card__price {
-    color: #3ab226;
+    color: #fd7777;
     font-size: 2.5rem;
     font-weight: 700;
     padding: 1rem 0 0 2.5rem;
@@ -41,7 +44,7 @@ export const Card = styled.a`
   }
 
   footer {
-    background-color: #e4e4eb;
+    background-color: #7a6e5e;
     display: flex;
     justify-content: space-between;
     padding: 2rem;
@@ -50,7 +53,7 @@ export const Card = styled.a`
       display: flex;
 
       button {
-        background-color: #f3f3f3;
+        background-color: #f8e8d4;
         border-radius: 7px;
         height: 40px;
         width: 40px;
@@ -63,7 +66,7 @@ export const Card = styled.a`
     }
 
     .card__footer-right {
-      background-color: #f3f3f3;
+      background-color: #f8e8d4;
       border-radius: 7px;
       height: 40px;
       width: 40px;

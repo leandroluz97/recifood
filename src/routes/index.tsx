@@ -4,10 +4,12 @@ import { Switch, Route } from "react-router-dom"
 import Dashboard from "../pages/Dashboard"
 import AddRecipe from "../pages/AddRecipe"
 import EditRecipe from "../pages/EditRecipe"
+import { ToastContainer } from "react-toastify"
 
 const Routes = () => {
   return (
     <>
+      <ToastContainer autoClose={2000} />
       <Header />
 
       <Switch>

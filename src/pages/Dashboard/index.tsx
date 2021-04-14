@@ -3,6 +3,7 @@ import { useRecipes } from "../../hooks/useRecipes"
 import { api } from "../../service/api"
 import RecipeCard from "../../components/Recipe"
 import { Container } from "./styles"
+import Spinner from "../../components/Spinner"
 
 /*
 const datas = [
@@ -114,19 +115,24 @@ const Dashboard = () => {
       })
   }, [])
 */
+
   return (
     <Container>
-      {recipes.map((recipe) => (
-        <RecipeCard
-          key={recipe.id}
-          name={recipe.name}
-          price={recipe.price}
-          image={recipe.image}
-          description={recipe.description}
-          id={recipe.id}
-          available={recipe.available}
-        />
-      ))}
+      {recipes.length == 0 ? (
+        <Spinner />
+      ) : (
+        recipes.map((recipe) => (
+          <RecipeCard
+            key={recipe.id}
+            name={recipe.name}
+            price={recipe.price}
+            image={recipe.image}
+            description={recipe.description}
+            id={recipe.id}
+            available={recipe.available}
+          />
+        ))
+      )}
     </Container>
   )
 }

@@ -5,14 +5,16 @@ import {
   useEffect,
   useState,
 } from "react"
+import { toast } from "react-toastify"
 import { api } from "../service/api"
+import "react-toastify/dist/ReactToastify.css"
 
 //Types
 interface RecipesProviderProps {
   children: ReactNode
 }
 interface Recipe {
-  id: number | string
+  id: string
   available: number
   name: string
   description: string
@@ -27,6 +29,7 @@ interface RecipeContextData {
   isSideNavOpen: boolean
   closeSidenav: () => void
   recipes: Recipe[]
+  deleteRecipe: (id: string) => Promise<void>
 }
 
 interface foodState {
@@ -46,37 +49,52 @@ export const RecipesProvider = ({
   const [recipes, setRecipes] = useState<Recipe[]>([])
 
   useEffect(() => {
-    ;(async function fetchData() {
-      const response = await api.get("/food.json")
-      let recipesData: Recipe[] = []
+    try {
+      ;(async function fetchData() {
+        const response = await api.get("/food.json")
+        let recipesData: Recipe[] = []
 
-      for (const key in response.data) {
-        recipesData.push({ id: key, ...response.data[key].data })
-      }
+        for (const key in response.data) {
+          recipesData.push({ id: key, ...response.data[key].data })
+        }
 
-      setRecipes(recipesData)
-    })()
-
-    /*
-    api
-      .get("/food.json")
-      .then(function (response) {
-        // handle success
-        console.log(response)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error)
-      })
-      */
+        setRecipes(recipesData)
+      })()
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   function closeSidenav() {
     setIsSideNavOpen(!isSideNavOpen)
   }
 
+  async function deleteRecipe(id: string) {
+    const recipeToDelete = recipes.find((recipe) => recipe.id === id)
+
+    if (!recipeToDelete) {
+      toast.error(" ❌ Error on deleting recipe. ")
+      return
+    }
+
+    try {
+      const response = await api.delete(`/food/${id}.json`)
+      const deleteInfo = await response
+
+      const filtered = recipes.filter((recipe) => recipe.id !== id)
+      setRecipes(filtered)
+
+      toast.success("Recipe deleted!")
+    } catch (error) {
+      console.log(error)
+      toast.error(" ❌ Error on deleting recipe. ")
+    }
+  }
+
   return (
-    <RecipesContext.Provider value={{ isSideNavOpen, closeSidenav, recipes }}>
+    <RecipesContext.Provider
+      value={{ isSideNavOpen, closeSidenav, recipes, deleteRecipe }}
+    >
       {children}
     </RecipesContext.Provider>
   )

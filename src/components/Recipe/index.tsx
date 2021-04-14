@@ -2,10 +2,11 @@ import { Card } from "./styles"
 import { FaEdit } from "react-icons/fa"
 import { FaTrashAlt } from "react-icons/fa"
 import { AiFillStar } from "react-icons/ai"
+import { useRecipes } from "../../hooks/useRecipes"
 
 //AiFillStar
 interface Recipe {
-  id: number | string
+  id: string
   available: number
   name: string
   description: string
@@ -21,6 +22,8 @@ const RecipeCard = ({
   id,
   available,
 }: Recipe) => {
+  const { deleteRecipe } = useRecipes()
+
   return (
     <Card>
       <img src={image} alt='Recipe Food' />
@@ -32,12 +35,12 @@ const RecipeCard = ({
           <button>
             <FaEdit color={"#3D3D3D"} size={20} />
           </button>
-          <button>
+          <button onClick={(e) => deleteRecipe(id)}>
             <FaTrashAlt color={"#3D3D3D"} size={20} />
           </button>
         </div>
         <button className='card__footer-right'>
-          <AiFillStar color={"#E4E4EB"} size={25} />
+          <AiFillStar color={"#E8D6C0"} size={25} />
         </button>
       </footer>
     </Card>
