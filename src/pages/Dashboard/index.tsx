@@ -116,6 +116,8 @@ const Dashboard = () => {
   }, [])
 */
 
+  console.log(recipes)
+
   const searched = favourites
     ? recipes.filter(
         (recipe) =>
@@ -123,8 +125,6 @@ const Dashboard = () => {
           recipe.favourite === true
       )
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
-
-  console.log("search: " + search)
 
   return (
     <Container>

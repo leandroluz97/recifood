@@ -34,6 +34,7 @@ interface RecipeContextData {
   setSearch: (value: string) => void
   favourites: boolean
   setFavourites: (fav: boolean) => void
+  addFavourite: (id: string) => Promise<void>
 }
 
 interface foodState {
@@ -97,7 +98,30 @@ export const RecipesProvider = ({
     }
   }
 
-  function searchRecipe(searchName: string) {}
+  async function addFavourite(id: string) {
+    try {
+      const recipeToFavourite = recipes.find((recipe) => recipe.id === id)
+
+      if (!recipeToFavourite) {
+        toast.error(" ❌ Error on adding favourite recipe. ")
+        return
+      }
+
+      recipeToFavourite["favourite"] = !recipeToFavourite.favourite
+      const data = { ...recipeToFavourite }
+
+      const response = await api.put(`/food/${id}.json`, { data })
+
+      const filtered = recipes.map((recipe) => {
+        if (recipe.id === id) {
+          return { ...recipe, ...data }
+        }
+        return recipe
+      })
+
+      setRecipes(filtered)
+    } catch (error) {}
+  }
 
   return (
     <RecipesContext.Provider
@@ -110,6 +134,7 @@ export const RecipesProvider = ({
         setSearch,
         favourites,
         setFavourites,
+        addFavourite,
       }}
     >
       {children}

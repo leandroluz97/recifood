@@ -22,7 +22,7 @@ const RecipeCard = ({
   id,
   favourite,
 }: Recipe) => {
-  const { deleteRecipe } = useRecipes()
+  const { deleteRecipe, addFavourite } = useRecipes()
 
   return (
     <Card>
@@ -39,8 +39,11 @@ const RecipeCard = ({
             <FaTrashAlt color={"#3D3D3D"} size={20} />
           </button>
         </div>
-        <button className='card__footer-right'>
-          <AiFillStar color={"#E8D6C0"} size={25} />
+        <button
+          className='card__footer-right'
+          onClick={(e) => addFavourite(id)}
+        >
+          <AiFillStar color={favourite ? "#FD7777" : "#E8D6C0"} size={25} />
         </button>
       </footer>
     </Card>
