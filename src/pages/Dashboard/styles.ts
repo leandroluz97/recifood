@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
   max-width: var(--screen-size);
-  margin: -12rem auto 0 auto;
+  margin: -7rem auto 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 30px;

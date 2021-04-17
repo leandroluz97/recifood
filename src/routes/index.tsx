@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard"
 import AddRecipe from "../pages/AddRecipe"
 import EditRecipe from "../pages/EditRecipe"
 import { ToastContainer } from "react-toastify"
+import OpenRecipe from "../pages/OpenRecipe"
 
 const Routes = () => {
   return (
@@ -15,7 +16,7 @@ const Routes = () => {
       <Switch>
         <Route path='/edit/:id' component={EditRecipe} />
         <Route path='/add' component={AddRecipe} />
-        {/*<Route path='/:id' component={} />*/}
+        <Route path='/:id' component={OpenRecipe} />
         <Route path='/' component={Dashboard} />
       </Switch>
 

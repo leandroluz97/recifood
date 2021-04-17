@@ -101,6 +101,7 @@ const data = {
 */
 const Dashboard = () => {
   const { recipes, search, favourites } = useRecipes()
+
   /*
   useEffect(() => {
     api
@@ -116,8 +117,6 @@ const Dashboard = () => {
   }, [])
 */
 
-  console.log(recipes)
-
   const searched = favourites
     ? recipes.filter(
         (recipe) =>
@@ -125,6 +124,8 @@ const Dashboard = () => {
           recipe.favourite === true
       )
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
+
+  console.log(searched)
 
   return (
     <Container>

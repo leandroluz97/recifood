@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
   background-color: var(--primary);
-  padding: 5rem 0 20rem 0;
+  padding: 5rem 0 10rem 0;
 
   header {
     max-width: var(--screen-size);

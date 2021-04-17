@@ -66,15 +66,18 @@ export const Card = styled.a`
     }
 
     .card__footer-right {
-      background-color: #f8e8d4;
-      border-radius: 7px;
-      height: 40px;
-      width: 40px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0.3rem;
-      border: none;
+      button {
+        background-color: #f8e8d4;
+        border-radius: 7px;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.3rem;
+        border: none;
+      }
     }
   }
 `

@@ -2,7 +2,9 @@ import { Card } from "./styles"
 import { FaEdit } from "react-icons/fa"
 import { FaTrashAlt } from "react-icons/fa"
 import { AiFillStar } from "react-icons/ai"
+import { AiFillEye } from "react-icons/ai"
 import { useRecipes } from "../../hooks/useRecipes"
+import { useHistory } from "react-router"
 
 //AiFillStar
 interface Recipe {
@@ -23,6 +25,11 @@ const RecipeCard = ({
   favourite,
 }: Recipe) => {
   const { deleteRecipe, addFavourite } = useRecipes()
+  let history = useHistory()
+
+  function handleClick(id: string) {
+    history.push(`/${id}`)
+  }
 
   return (
     <Card>
@@ -39,12 +46,14 @@ const RecipeCard = ({
             <FaTrashAlt color={"#3D3D3D"} size={20} />
           </button>
         </div>
-        <button
-          className='card__footer-right'
-          onClick={(e) => addFavourite(id)}
-        >
-          <AiFillStar color={favourite ? "#FD7777" : "#E8D6C0"} size={25} />
-        </button>
+        <div className='card__footer-right'>
+          <button onClick={() => handleClick(id)}>
+            <AiFillEye color={"#3D3D3D"} size={25} />
+          </button>
+          <button onClick={(e) => addFavourite(id)}>
+            <AiFillStar color={favourite ? "#FD7777" : "#E8D6C0"} size={25} />
+          </button>
+        </div>
       </footer>
     </Card>
   )

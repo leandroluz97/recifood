@@ -8,7 +8,7 @@ const Search = () => {
       type='text'
       placeholder='Search for recipes'
       value={search}
-      onChange={(e) => setSearch(e.target.value)}
+      onChange={(e) => setSearch(e.target.value.toLowerCase())}
     ></InputSearch>
   )
 }

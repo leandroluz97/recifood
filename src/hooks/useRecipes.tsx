@@ -35,6 +35,9 @@ interface RecipeContextData {
   favourites: boolean
   setFavourites: (fav: boolean) => void
   addFavourite: (id: string) => Promise<void>
+  open: Recipe
+  getRecipe: (id: string) => Promise<void>
+  error: boolean
 }
 
 interface foodState {
@@ -54,6 +57,9 @@ export const RecipesProvider = ({
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [search, setSearch] = useState("")
   const [favourites, setFavourites] = useState(false)
+  const [isOpen, setIsOpen] = useState("")
+  const [open, setOpen] = useState({} as Recipe)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     try {
@@ -120,7 +126,22 @@ export const RecipesProvider = ({
       })
 
       setRecipes(filtered)
-    } catch (error) {}
+      setOpen(open.name !== undefined ? data : ({} as Recipe))
+    } catch (error) {
+      toast.error(" ❌ Error on adding favourite recipe. ")
+    }
+  }
+
+  async function getRecipe(id: string) {
+    try {
+      const response = await api.get(`/food/${id}.json`)
+      const recipe = await response
+
+      setOpen(recipe.data.data)
+    } catch (error) {
+      setError(true)
+      toast.error(" ❌ Error on loading recipe. ")
+    }
   }
 
   return (
@@ -135,6 +156,9 @@ export const RecipesProvider = ({
         favourites,
         setFavourites,
         addFavourite,
+        open,
+        getRecipe,
+        error,
       }}
     >
       {children}
