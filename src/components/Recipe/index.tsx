@@ -24,11 +24,15 @@ const RecipeCard = ({
   id,
   favourite,
 }: Recipe) => {
-  const { deleteRecipe, addFavourite } = useRecipes()
+  const { deleteRecipe, addFavourite, setEditRecipe } = useRecipes()
   let history = useHistory()
 
-  function handleClick(id: string) {
+  function handleView(id: string) {
     history.push(`/${id}`)
+  }
+  function handleSetEdit() {
+    setEditRecipe({ id, image, name, price, favourite, description })
+    history.push(`/edit/${id}`)
   }
 
   return (
@@ -36,10 +40,15 @@ const RecipeCard = ({
       <img src={image} alt='Recipe Food' />
       <h2 className='card__title'>{name}</h2>
       <p className='card__description'>{description}</p>
-      <p className='card__price'>{price}</p>
+      <p className='card__price'>
+        {new Intl.NumberFormat("pt-PT", {
+          style: "currency",
+          currency: "EUR",
+        }).format(price)}
+      </p>
       <footer>
         <div className='card__footer-left'>
-          <button>
+          <button onClick={(e) => handleSetEdit()}>
             <FaEdit color={"#3D3D3D"} size={20} />
           </button>
           <button onClick={(e) => deleteRecipe(id)}>
@@ -47,7 +56,7 @@ const RecipeCard = ({
           </button>
         </div>
         <div className='card__footer-right'>
-          <button onClick={() => handleClick(id)}>
+          <button onClick={() => handleView(id)}>
             <AiFillEye color={"#3D3D3D"} size={25} />
           </button>
           <button onClick={(e) => addFavourite(id)}>

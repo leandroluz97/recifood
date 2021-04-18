@@ -125,8 +125,6 @@ const Dashboard = () => {
       )
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
 
-  console.log(searched)
-
   return (
     <Container>
       {searched.length === 0 ? (

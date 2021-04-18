@@ -14,7 +14,11 @@ export const InputSearch = styled.input`
   margin: 0 2rem;
   width: 100%;
   max-width: 300px;
+  border: solid 2px transparent;
 
+  &:focus {
+    border: solid 2px #635c52;
+  }
   &::placeholder {
     color: #635c52;
   }

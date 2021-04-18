@@ -21,6 +21,9 @@ interface Recipe {
   price: number
   image: string
 }
+
+type RecipeAddInput = Omit<Recipe, "id" | "favourite">
+
 interface Sidenav {
   isSideNavOpen: boolean
 }
@@ -38,6 +41,10 @@ interface RecipeContextData {
   open: Recipe
   getRecipe: (id: string) => Promise<void>
   error: boolean
+  addRecipe: (inputValue: RecipeAddInput) => Promise<void>
+  setEditRecipe: (data: Recipe) => void
+  editRecipe: Recipe
+  updateRecipe: (data: Recipe) => Promise<void>
 }
 
 interface foodState {
@@ -60,6 +67,7 @@ export const RecipesProvider = ({
   const [isOpen, setIsOpen] = useState("")
   const [open, setOpen] = useState({} as Recipe)
   const [error, setError] = useState(false)
+  const [editRecipe, setEditRecipe] = useState({} as Recipe)
 
   useEffect(() => {
     try {
@@ -144,6 +152,49 @@ export const RecipesProvider = ({
     }
   }
 
+  async function addRecipe(inputValue: RecipeAddInput) {
+    try {
+      let data = { ...inputValue, favourite: false }
+
+      const response = await api.post(`/food.json`, { data })
+      const addedRecipe = await response
+
+      console.log(addedRecipe.data.name)
+
+      setRecipes([...recipes, { id: addedRecipe.data.name, ...data }])
+
+      toast.success("Recipe added!")
+    } catch (error) {
+      console.log(error)
+      toast.error(" ❌ Error on adding recipe. ")
+    }
+  }
+
+  async function updateRecipe(inputValue: Recipe) {
+    try {
+      let data = { ...inputValue }
+
+      const response = await api.put(`/food/${editRecipe.id}.json`, { data })
+      const updatedRecipe = await response
+
+      const updated = updatedRecipe.data.data
+
+      const allRecipes = recipes.map((recipe) => {
+        if (recipe.id === updated.id) {
+          return { ...updated }
+        }
+        return recipe
+      })
+
+      setRecipes(allRecipes)
+
+      toast.success("Recipe updated!")
+    } catch (error) {
+      console.log(error)
+      toast.error(" ❌ Error on updateding recipe. ")
+    }
+  }
+
   return (
     <RecipesContext.Provider
       value={{
@@ -159,6 +210,10 @@ export const RecipesProvider = ({
         open,
         getRecipe,
         error,
+        addRecipe,
+        setEditRecipe,
+        editRecipe,
+        updateRecipe,
       }}
     >
       {children}

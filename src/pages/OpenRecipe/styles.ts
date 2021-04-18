@@ -82,4 +82,8 @@ export const Container = styled.div`
     height: 200px;
     object-fit: cover;
   }
+
+  @media (max-width: 768px) {
+    // margin: 3rem auto 0 auto;
+  }
 `
