@@ -1,11 +1,17 @@
 import React, { ChangeEvent, useState } from "react"
+import { useHistory } from "react-router"
+import { toast } from "react-toastify"
 import Input from "../../components/Input"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Form, Container } from "./styles"
 
 interface InputType {
-  name: string
-  event: HTMLInputElement
+  id: string
+  placeholder: string
+  value: string
+  validation: string
+  valid: boolean
+  error: string
 }
 
 const AddRecipe = () => {
@@ -16,7 +22,7 @@ const AddRecipe = () => {
       value: "",
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
     name: {
       id: "name",
@@ -24,7 +30,7 @@ const AddRecipe = () => {
       value: "",
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
     ingredients: {
       id: "ingredients",
@@ -32,7 +38,7 @@ const AddRecipe = () => {
       value: "",
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
     price: {
       id: "price",
@@ -40,10 +46,38 @@ const AddRecipe = () => {
       value: "",
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
   })
 
+  function checkValidity(value: string, type: string) {
+    let expression = new RegExp(
+      /^((ftp|http|https):\/\/)?www\.([A-z]+)\.([A-z]{2,})/
+    )
+
+    let valid = true
+    let error = ""
+
+    if (type === "image" && (!expression.test(value) || value === "")) {
+      valid = false
+      error = 'Enter a valid link eg.:"https://www.image.com/ihghvg"'
+    }
+
+    if (type === "name" && value === "") {
+      valid = false
+      error = 'Enter a valid name eg.:"John Doe"'
+    }
+    if (type === "ingredients" && value === "") {
+      valid = false
+      error = 'Enter a valid ingredients eg.:"John Doe"'
+    }
+    if ((type === "price" && !isNaN(Number(value))) || value === "") {
+      valid = false
+      error = 'Enter a valid price eg.:"11.99"'
+    }
+
+    return { valid, error }
+  }
   const { addRecipe } = useRecipes()
   function handleInput(event: ChangeEvent<HTMLInputElement>) {
     let form = { ...formData }
@@ -51,15 +85,29 @@ const AddRecipe = () => {
     switch (event.target.name) {
       case "image":
         form.image.value = event.target.value
+        const imageValid = checkValidity(form.image.value, "image")
+        form.image.valid = imageValid.valid
+        form.image.error = imageValid.error
+
         break
       case "name":
         form.name.value = event.target.value
+        const nameValid = checkValidity(form.name.value, "name")
+        form.name.valid = nameValid.valid
+        form.name.error = nameValid.error
         break
       case "ingredients":
         form.ingredients.value = event.target.value
+        const ingredientsValid = checkValidity(form.name.value, "ingredients")
+        form.ingredients.valid = ingredientsValid.valid
+        form.ingredients.error = ingredientsValid.error
         break
       case "price":
         form.price.value = event.target.value
+        const priceValid = checkValidity(form.name.value, "ingredients")
+        form.price.valid = priceValid.valid
+        form.price.error = priceValid.error
+
         break
 
       default:
@@ -68,8 +116,23 @@ const AddRecipe = () => {
 
     setFormData(form)
   }
+
+  let history = useHistory()
   function handleSubmit(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    const formArr = Object.values(formData)
+
+    const errorForm = formArr.find((input) => input.valid === false)
+    const isError = { ...(errorForm as InputType) }
+    const { valid, error } = isError
+
+    console.log(error, valid)
+
+    if (!valid && valid !== undefined) {
+      toast.error(error === "" ? "Please fill the form" : error)
+      return
+    }
 
     const image = formData.image.value.trim()
     const name = formData.name.value.trim()
@@ -77,6 +140,7 @@ const AddRecipe = () => {
     const price = parseInt(formData.price.value.trim())
 
     addRecipe({ image, name, description, price })
+    history.push("/")
   }
   return (
     <Container>

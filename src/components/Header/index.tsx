@@ -8,6 +8,7 @@ import Search from "../Search"
 import { FaBars } from "react-icons/fa"
 import SideNav from "../SideNav"
 import { useRecipes } from "../../hooks/useRecipes"
+import { Link } from "react-router-dom"
 
 const Header = () => {
   const { isSideNavOpen, closeSidenav, recipes } = useRecipes()
@@ -16,7 +17,10 @@ const Header = () => {
     <>
       <Container>
         <header>
-          <img src={Logo} alt='logotipo' />
+          <Link to='/'>
+            {" "}
+            <img src={Logo} alt='logotipo' />
+          </Link>
           <div className='header__content'>
             {/*<input type='text' placeholder='Search for recipes' />*/}
             <Search />
