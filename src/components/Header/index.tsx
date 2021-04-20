@@ -9,6 +9,7 @@ import { FaBars } from "react-icons/fa"
 import SideNav from "../SideNav"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Link } from "react-router-dom"
+import { IoClose } from "react-icons/io5"
 
 const Header = () => {
   const { isSideNavOpen, closeSidenav, recipes } = useRecipes()
@@ -18,7 +19,6 @@ const Header = () => {
       <Container>
         <header>
           <Link to='/'>
-            {" "}
             <img src={Logo} alt='logotipo' />
           </Link>
           <div className='header__content'>
@@ -30,9 +30,13 @@ const Header = () => {
             {/* <button className='header__favourite'>F</button>*/}
             {/*<button className='header__newRecipe'>NEW RECIPE</button>*/}
           </div>
-          <div className='header__icon' onClick={() => closeSidenav()}>
-            <FaBars color={"FDD277"} size={20} />
-          </div>
+          <button className='header__icon' onClick={() => closeSidenav()}>
+            {isSideNavOpen ? (
+              <IoClose color={"FDD277"} size={30} />
+            ) : (
+              <FaBars color={"FDD277"} size={20} />
+            )}
+          </button>
         </header>
       </Container>
       <SideNav />

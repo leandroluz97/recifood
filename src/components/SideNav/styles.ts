@@ -9,13 +9,14 @@ export const Container = styled.div<ContainerProps>`
     display: block;
     background-color: #1e1913;
     color: white;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: ${(props) => (props.isSideNavOpen ? "0%" : "100%")};
     right: 0;
     top: 92px;
     padding: 2.5rem;
     transition: all 0.4s ease;
+    z-index: 888;
 
     div {
       display: flex;

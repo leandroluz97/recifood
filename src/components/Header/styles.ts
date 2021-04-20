@@ -26,6 +26,11 @@ export const Container = styled.div`
   @media (max-width: 768px) {
     padding: 2rem 0 2rem 0;
 
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    z-index: 999;
+
     img {
       width: 200px;
       height: auto;
@@ -36,7 +41,11 @@ export const Container = styled.div`
     }
 
     .header__icon {
-      display: block;
+      background-color: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 `
