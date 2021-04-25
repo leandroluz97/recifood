@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from "react"
 import { useHistory } from "react-router"
 import { toast } from "react-toastify"
+import Header from "../../components/Header"
 import Input from "../../components/Input"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Form, Container } from "./styles"
@@ -143,45 +144,48 @@ const AddRecipe = () => {
     history.push("/")
   }
   return (
-    <Container>
-      <div>
-        <h1 style={{ textAlign: "center", color: "#443B30" }}>
-          ADD NEW RECIPE
-        </h1>
-        <Form onSubmit={handleSubmit}>
-          <Input
-            placeholder={formData.image.placeholder}
-            key={formData.image.id}
-            value={formData.image.value}
-            handleInput={handleInput}
-            name={formData.image.id}
-          />
-          <Input
-            placeholder={formData.name.placeholder}
-            key={formData.name.id}
-            value={formData.name.value}
-            handleInput={handleInput}
-            name={formData.name.id}
-          />
-          <Input
-            placeholder={formData.ingredients.placeholder}
-            key={formData.ingredients.id}
-            value={formData.ingredients.value}
-            handleInput={handleInput}
-            name={formData.ingredients.id}
-          />
-          <Input
-            placeholder={formData.price.placeholder}
-            key={formData.price.id}
-            value={formData.price.value}
-            handleInput={handleInput}
-            name={formData.price.id}
-          />
+    <>
+      <Header />
+      <Container>
+        <div>
+          <h1 style={{ textAlign: "center", color: "#443B30" }}>
+            ADD NEW RECIPE
+          </h1>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              placeholder={formData.image.placeholder}
+              key={formData.image.id}
+              value={formData.image.value}
+              handleInput={handleInput}
+              name={formData.image.id}
+            />
+            <Input
+              placeholder={formData.name.placeholder}
+              key={formData.name.id}
+              value={formData.name.value}
+              handleInput={handleInput}
+              name={formData.name.id}
+            />
+            <Input
+              placeholder={formData.ingredients.placeholder}
+              key={formData.ingredients.id}
+              value={formData.ingredients.value}
+              handleInput={handleInput}
+              name={formData.ingredients.id}
+            />
+            <Input
+              placeholder={formData.price.placeholder}
+              key={formData.price.id}
+              value={formData.price.value}
+              handleInput={handleInput}
+              name={formData.price.id}
+            />
 
-          <button type='submit'>SUBMIT</button>
-        </Form>
-      </div>
-    </Container>
+            <button type='submit'>SUBMIT</button>
+          </Form>
+        </div>
+      </Container>
+    </>
   )
 }
 

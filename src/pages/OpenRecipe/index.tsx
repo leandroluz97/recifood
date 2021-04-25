@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { AiFillStar } from "react-icons/ai"
 import { FaEdit, FaTrashAlt } from "react-icons/fa"
 import { useHistory, useParams } from "react-router"
+import Header from "../../components/Header"
 import Spinner from "../../components/Spinner"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Container } from "./styles"
@@ -42,6 +43,7 @@ const OpenRecipe = () => {
 
   return (
     <>
+      <Header />
       {name === undefined ? (
         <Spinner />
       ) : (

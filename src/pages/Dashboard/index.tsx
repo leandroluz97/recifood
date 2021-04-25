@@ -4,6 +4,7 @@ import { useRecipes } from "../../hooks/useRecipes"
 import RecipeCard from "../../components/Recipe"
 import { Container } from "./styles"
 import Spinner from "../../components/Spinner"
+import Header from "../../components/Header"
 
 /*
 const datas = [
@@ -126,23 +127,26 @@ const Dashboard = () => {
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
 
   return (
-    <Container>
-      {searched.length === 0 ? (
-        <Spinner />
-      ) : (
-        searched.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            name={recipe.name}
-            price={recipe.price}
-            image={recipe.image}
-            description={recipe.description}
-            id={recipe.id}
-            favourite={recipe.favourite}
-          />
-        ))
-      )}
-    </Container>
+    <>
+      <Header />
+      <Container>
+        {searched.length === 0 ? (
+          <Spinner />
+        ) : (
+          searched.map((recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              name={recipe.name}
+              price={recipe.price}
+              image={recipe.image}
+              description={recipe.description}
+              id={recipe.id}
+              favourite={recipe.favourite}
+            />
+          ))
+        )}
+      </Container>
+    </>
   )
 }
 
