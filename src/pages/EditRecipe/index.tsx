@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react"
 import { Redirect, useHistory } from "react-router"
 import Header from "../../components/Header"
 import Input from "../../components/Input"
+import { useAuth } from "../../hooks/useAuth"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Form, Container } from "./styles"
 
@@ -42,6 +43,7 @@ const EditRecipe = () => {
     },
   })
 
+  const { currentUser } = useAuth()
   let history = useHistory()
 
   function handleInput(event: ChangeEvent<HTMLInputElement>) {
@@ -80,6 +82,10 @@ const EditRecipe = () => {
 
     history.push("/")
   }
+  if (!currentUser) {
+    return <Redirect to='/login' />
+  }
+
   const { name } = editRecipe
 
   return name === undefined ? (

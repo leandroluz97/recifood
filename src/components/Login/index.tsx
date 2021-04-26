@@ -2,9 +2,11 @@ import { Container } from "./styles"
 import logo from "../../assets/logo_dark.svg"
 import google from "../../assets/google.svg"
 
-import firebase from "firebase/app"
+import firebase from "../../config/firebase-config"
+import { useHistory } from "react-router"
 
 const Login = () => {
+  const history = useHistory()
   function onSubmit() {
     let provider = new firebase.auth.GoogleAuthProvider()
 
@@ -12,15 +14,18 @@ const Login = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        var credential = result.credential
+        let credential = result.credential as firebase.auth.OAuthCredential
 
         // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = credential.accessToken
+        let token = credential.accessToken
         // The signed-in user info.
-        var user = result.user
-        // ...
+        let user = result.user
+
+        history.push("/")
       })
-      .catch((error) => {})
+      .catch((error) => {
+        console.log(error)
+      })
   }
   return (
     <Container>

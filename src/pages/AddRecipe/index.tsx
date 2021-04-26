@@ -1,10 +1,11 @@
 import React, { ChangeEvent, useState } from "react"
-import { useHistory } from "react-router"
+import { Redirect, useHistory } from "react-router"
 import { toast } from "react-toastify"
 import Header from "../../components/Header"
 import Input from "../../components/Input"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Form, Container } from "./styles"
+import { useAuth } from "../../hooks/useAuth"
 
 interface InputType {
   id: string
@@ -50,6 +51,8 @@ const AddRecipe = () => {
       error: "",
     },
   })
+
+  const { currentUser } = useAuth()
 
   function checkValidity(value: string, type: string) {
     let expression = new RegExp(
@@ -142,6 +145,10 @@ const AddRecipe = () => {
 
     addRecipe({ image, name, description, price })
     history.push("/")
+  }
+
+  if (!currentUser) {
+    return <Redirect to='/login' />
   }
   return (
     <>

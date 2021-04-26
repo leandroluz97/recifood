@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { AiFillStar } from "react-icons/ai"
 import { FaEdit, FaTrashAlt } from "react-icons/fa"
-import { useHistory, useParams } from "react-router"
+import { Redirect, useHistory, useParams } from "react-router"
 import Header from "../../components/Header"
 import Spinner from "../../components/Spinner"
+import { useAuth } from "../../hooks/useAuth"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Container } from "./styles"
 
@@ -22,7 +23,7 @@ const OpenRecipe = () => {
     error,
     setEditRecipe,
   } = useRecipes()
-
+  const { currentUser } = useAuth()
   let history = useHistory()
   let params: { id: string } = useParams()
   useEffect(() => {
@@ -39,6 +40,10 @@ const OpenRecipe = () => {
   function handleDelete() {
     deleteRecipe(id)
     history.push("/")
+  }
+
+  if (!currentUser) {
+    return <Redirect to='/login' />
   }
 
   return (

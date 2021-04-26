@@ -5,6 +5,8 @@ import RecipeCard from "../../components/Recipe"
 import { Container } from "./styles"
 import Spinner from "../../components/Spinner"
 import Header from "../../components/Header"
+import { useAuth } from "../../hooks/useAuth"
+import { Redirect } from "react-router"
 
 /*
 const datas = [
@@ -117,6 +119,7 @@ const Dashboard = () => {
       })
   }, [])
 */
+  const { currentUser } = useAuth()
 
   const searched = favourites
     ? recipes.filter(
@@ -125,6 +128,10 @@ const Dashboard = () => {
           recipe.favourite === true
       )
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
+
+  if (!currentUser) {
+    return <Redirect to='/login' />
+  }
 
   return (
     <>
