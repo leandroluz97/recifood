@@ -147,9 +147,6 @@ const AddRecipe = () => {
     history.push("/")
   }
 
-  if (!currentUser) {
-    return <Redirect to='/login' />
-  }
   return (
     <>
       <Header />

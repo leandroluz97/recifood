@@ -43,7 +43,6 @@ const EditRecipe = () => {
     },
   })
 
-  const { currentUser } = useAuth()
   let history = useHistory()
 
   function handleInput(event: ChangeEvent<HTMLInputElement>) {
@@ -82,11 +81,10 @@ const EditRecipe = () => {
 
     history.push("/")
   }
-  if (!currentUser) {
-    return <Redirect to='/login' />
-  }
 
   const { name } = editRecipe
+
+  console.log("edit")
 
   return name === undefined ? (
     <Redirect to='/' />

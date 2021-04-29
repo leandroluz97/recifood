@@ -3,30 +3,24 @@ import logo from "../../assets/logo_dark.svg"
 import google from "../../assets/google.svg"
 
 import firebase from "../../config/firebase-config"
-import { useHistory } from "react-router"
+import { Redirect, useHistory } from "react-router"
+import { useAuth } from "../../hooks/useAuth"
+import { ChangeEvent } from "react"
 
+interface TypeEvent {
+  handleOnSubmit: (e: ChangeEvent<HTMLFormElement>) => Promise<void>
+}
 const Login = () => {
   const history = useHistory()
-  function onSubmit() {
-    let provider = new firebase.auth.GoogleAuthProvider()
+  const { setCurrentUser, currentUser, onSubmit } = useAuth()
 
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        let credential = result.credential as firebase.auth.OAuthCredential
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        let token = credential.accessToken
-        // The signed-in user info.
-        let user = result.user
-
-        history.push("/")
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  async function handleOnSubmit() {
+    try {
+      await onSubmit()
+      history.push("/")
+    } catch (error) {}
   }
+
   return (
     <Container>
       <div>
@@ -35,7 +29,7 @@ const Login = () => {
         <div className='login__box'>
           <h2>Welcome To Recifood</h2>
 
-          <button type='button' onClick={onSubmit}>
+          <button type='button' onClick={handleOnSubmit}>
             <span>Login with</span> <img src={google} alt='google' />
           </button>
         </div>

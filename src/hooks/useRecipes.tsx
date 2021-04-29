@@ -148,7 +148,7 @@ export const RecipesProvider = ({
       setOpen(recipe.data.data)
     } catch (error) {
       setError(true)
-      toast.error(" ❌ Error on loading recipe. ")
+      toast.error(" ❌ Error on loading this recipe. ")
     }
   }
 

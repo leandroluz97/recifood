@@ -129,10 +129,6 @@ const Dashboard = () => {
       )
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
 
-  if (!currentUser) {
-    return <Redirect to='/login' />
-  }
-
   return (
     <>
       <Header />

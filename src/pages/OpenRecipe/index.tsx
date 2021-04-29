@@ -23,7 +23,7 @@ const OpenRecipe = () => {
     error,
     setEditRecipe,
   } = useRecipes()
-  const { currentUser } = useAuth()
+
   let history = useHistory()
   let params: { id: string } = useParams()
   useEffect(() => {
@@ -34,7 +34,7 @@ const OpenRecipe = () => {
 
   function handleSetEdit() {
     setEditRecipe({ id, image, name, price, favourite, description })
-    history.push(`/edit/${id}`)
+    history.push(`edit/${id}`)
   }
 
   function handleDelete() {
@@ -42,9 +42,7 @@ const OpenRecipe = () => {
     history.push("/")
   }
 
-  if (!currentUser) {
-    return <Redirect to='/login' />
-  }
+  console.log()
 
   return (
     <>
