@@ -119,7 +119,6 @@ const Dashboard = () => {
       })
   }, [])
 */
-  const { currentUser } = useAuth()
 
   const searched = favourites
     ? recipes.filter(
@@ -128,6 +127,8 @@ const Dashboard = () => {
           recipe.favourite === true
       )
     : recipes.filter((recipe) => recipe.name.toLowerCase().includes(search))
+
+  console.log("dashboard")
 
   return (
     <>

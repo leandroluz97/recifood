@@ -1,10 +1,20 @@
 import React, { ChangeEvent, useState } from "react"
 import { Redirect, useHistory } from "react-router"
+import { toast } from "react-toastify"
 import Header from "../../components/Header"
 import Input from "../../components/Input"
 import { useAuth } from "../../hooks/useAuth"
 import { useRecipes } from "../../hooks/useRecipes"
 import { Form, Container } from "./styles"
+
+interface InputType {
+  id: string
+  placeholder: string
+  value: string
+  validation: string
+  valid: boolean
+  error: string
+}
 
 const EditRecipe = () => {
   const { editRecipe, updateRecipe } = useRecipes()
@@ -15,7 +25,7 @@ const EditRecipe = () => {
       value: editRecipe.image,
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
     name: {
       id: "name",
@@ -23,7 +33,7 @@ const EditRecipe = () => {
       value: editRecipe.name,
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
     ingredients: {
       id: "ingredients",
@@ -31,7 +41,7 @@ const EditRecipe = () => {
       value: editRecipe.description,
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
     price: {
       id: "price",
@@ -39,11 +49,40 @@ const EditRecipe = () => {
       value: String(editRecipe.price),
       validation: "required",
       valid: false,
-      error: null,
+      error: "",
     },
   })
 
   let history = useHistory()
+
+  function checkValidity(value: string, type: string) {
+    let expression = new RegExp(
+      /^((ftp|http|https):\/\/)?www\.([A-z]+)\.([A-z]{2,})/
+    )
+
+    let valid = true
+    let error = ""
+
+    if (type === "image" && (!expression.test(value) || value === "")) {
+      valid = false
+      error = 'Enter a valid link eg.:"https://www.image.com/ihghvg"'
+    }
+
+    if (type === "name" && value === "") {
+      valid = false
+      error = 'Enter a valid name eg.:"John Doe"'
+    }
+    if (type === "ingredients" && value === "") {
+      valid = false
+      error = 'Enter a valid ingredients eg.:"John Doe"'
+    }
+    if ((type === "price" && !isNaN(Number(value))) || value === "") {
+      valid = false
+      error = 'Enter a valid price eg.:"11.99"'
+    }
+
+    return { valid, error }
+  }
 
   function handleInput(event: ChangeEvent<HTMLInputElement>) {
     let form = { ...formData }
@@ -51,15 +90,29 @@ const EditRecipe = () => {
     switch (event.target.name) {
       case "image":
         form.image.value = event.target.value
+        const imageValid = checkValidity(form.image.value, "image")
+        form.image.valid = imageValid.valid
+        form.image.error = imageValid.error
+
         break
       case "name":
         form.name.value = event.target.value
+        const nameValid = checkValidity(form.name.value, "name")
+        form.name.valid = nameValid.valid
+        form.name.error = nameValid.error
         break
       case "ingredients":
         form.ingredients.value = event.target.value
+        const ingredientsValid = checkValidity(form.name.value, "ingredients")
+        form.ingredients.valid = ingredientsValid.valid
+        form.ingredients.error = ingredientsValid.error
         break
       case "price":
         form.price.value = event.target.value
+        const priceValid = checkValidity(form.name.value, "ingredients")
+        form.price.valid = priceValid.valid
+        form.price.error = priceValid.error
+
         break
 
       default:
@@ -68,8 +121,22 @@ const EditRecipe = () => {
 
     setFormData(form)
   }
+
   async function handleSubmit(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    const formArr = Object.values(formData)
+
+    const errorForm = formArr.find((input) => input.valid === false)
+    const isError = { ...(errorForm as InputType) }
+    const { valid, error } = isError
+
+    console.log(error, valid)
+
+    if (!valid && valid !== undefined) {
+      toast.error(error === "" ? "Please fill the form" : error)
+      return
+    }
 
     const image = formData.image.value.trim()
     const name = formData.name.value.trim()

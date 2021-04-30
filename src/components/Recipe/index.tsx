@@ -28,11 +28,11 @@ const RecipeCard = ({
   let history = useHistory()
 
   function handleView(id: string) {
-    history.push(`/${id}`)
+    history.push(`/recipe/${id}`)
   }
   function handleSetEdit() {
     setEditRecipe({ id, image, name, price, favourite, description })
-    history.push(`/edit/${id}`)
+    history.push(`/recipe/edit/${id}`)
   }
 
   return (

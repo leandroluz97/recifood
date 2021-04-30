@@ -22,11 +22,11 @@ const Routes = () => {
   if (currentUser) {
     routes = (
       <Switch>
-        <Route path='/edit/:id' component={EditRecipe} />
-        <Route path='/add' component={AddRecipe} />
-        <Route path='/:id' component={OpenRecipe} />
-        <Route path='/' component={Dashboard} />
-        <Redirect to='/login' />
+        <Route exact path='/' component={Dashboard} />
+        <Route exact path='/recipe/edit/:id' component={EditRecipe} />
+        <Route exact path='/recipe/add' component={AddRecipe} />
+        <Route exact path='/recipe/:id' component={OpenRecipe} />
+        <Redirect to='/' />
       </Switch>
     )
   }

@@ -44,8 +44,6 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
         let user = result.user
 
         //setCurrentUser(user)
-
-        console.log("pushed")
       })
       .catch((error) => {
         console.log(error)

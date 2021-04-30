@@ -147,6 +147,8 @@ const AddRecipe = () => {
     history.push("/")
   }
 
+  console.log("addRecipe")
+
   return (
     <>
       <Header />

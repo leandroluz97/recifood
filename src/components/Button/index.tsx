@@ -8,7 +8,7 @@ const Button = () => {
   let history = useHistory()
 
   function handleRoute() {
-    history.push(`/add`)
+    history.push(`recipe/add`)
     closeSidenav()
   }
   return <ButtonAction onClick={() => handleRoute()}>New Recipe</ButtonAction>

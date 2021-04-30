@@ -12,13 +12,15 @@ interface TypeEvent {
 }
 const Login = () => {
   const history = useHistory()
-  const { setCurrentUser, currentUser, onSubmit } = useAuth()
+  const { onSubmit } = useAuth()
 
   async function handleOnSubmit() {
     try {
       await onSubmit()
       history.push("/")
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

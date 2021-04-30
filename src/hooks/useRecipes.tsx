@@ -82,7 +82,7 @@ export const RecipesProvider = ({
         setRecipes(recipesData)
       })()
     } catch (error) {
-      console.log(error)
+      toast.error(" ❌ Error on loading all recipe. ")
     }
   }, [])
 
@@ -141,6 +141,9 @@ export const RecipesProvider = ({
   }
 
   async function getRecipe(id: string) {
+    //if (!id) return
+    console.log(id)
+
     try {
       const response = await api.get(`/food/${id}.json`)
       const recipe = await response

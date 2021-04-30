@@ -15,34 +15,34 @@ interface styleType {
 }
 const OpenRecipe = () => {
   const {
-    recipes,
     getRecipe,
     open,
     addFavourite,
     deleteRecipe,
-    error,
+
     setEditRecipe,
   } = useRecipes()
 
   let history = useHistory()
   let params: { id: string } = useParams()
+
   useEffect(() => {
-    getRecipe(params.id)
+    ;(async function () {
+      await getRecipe(params.id)
+    })()
   }, [])
 
   const { image, name, description, price, id, favourite } = open
 
   function handleSetEdit() {
     setEditRecipe({ id, image, name, price, favourite, description })
-    history.push(`edit/${id}`)
+    history.push(`/recipe/edit/${id}`)
   }
 
   function handleDelete() {
     deleteRecipe(id)
     history.push("/")
   }
-
-  console.log()
 
   return (
     <>
