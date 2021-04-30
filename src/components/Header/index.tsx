@@ -13,22 +13,11 @@ import { IoClose } from "react-icons/io5"
 
 import firebase from "../../config/firebase-config"
 import { useAuth } from "../../hooks/useAuth"
+import Logout from "../Logout"
 
 const Header = () => {
   const { isSideNavOpen, closeSidenav, recipes } = useRecipes()
   const { setCurrentUser } = useAuth()
-
-  let history = useHistory()
-
-  function handleLogout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(function () {
-        setCurrentUser(null)
-        history.push("/login")
-      })
-  }
 
   return (
     <>
@@ -42,6 +31,7 @@ const Header = () => {
             <Search />
             <Favourite />
             <Button />
+            <Logout />
 
             {/* <button className='header__favourite'>F</button>*/}
             {/*<button className='header__newRecipe'>NEW RECIPE</button>*/}
@@ -56,9 +46,6 @@ const Header = () => {
             ) : (
               <FaBars color={"FDD277"} size={20} />
             )}
-          </button>
-          <button type='button' onClick={handleLogout}>
-            Logout
           </button>
         </header>
       </Container>

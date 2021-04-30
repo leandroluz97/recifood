@@ -1,29 +1,26 @@
 import styled from "styled-components"
 
-export const ButtonAction = styled.button`
-  background-color: var(--btn-color);
+export const LogoutBtn = styled.button`
+  background-color: var(--secondary);
   height: 6rem;
   padding: 0 2rem 0 2rem;
   border: none;
   border-radius: 6px;
+  margin: 0 0rem 0 2rem;
   transition: background-color 0.6s ease;
-  text-transform: uppercase;
-  font-weight: 600;
 
   &:hover {
-    background-color: #fbe7cc;
+    background-color: #3f372d;
   }
 
   @media (max-width: 768px) {
-    margin: 3.5rem auto;
+    margin: 0 auto;
     width: 100%;
     max-width: 400px;
 
-    /*
     position: absolute;
-    bottom: 90px;
+    bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
-    */
   }
 `
